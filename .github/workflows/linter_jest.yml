@@ -10,5 +10,5 @@ jobs:
         with:
           node-version: 16
       - name: npm install
-      - run: make lint
+      - run: make install
 
