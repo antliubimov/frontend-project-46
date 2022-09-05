@@ -3,6 +3,10 @@ env:
 
 extends:
   - 'airbnb-base'
+  - 'prettier'
+
+plugins:
+  - 'prettier'
 
 parserOptions:
   ecmaVersion: latest
@@ -13,3 +17,4 @@ rules:
     - error
     - ignorePackages
     - js: always
+  prettier/prettier: "error"
