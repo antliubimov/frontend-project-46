@@ -3,6 +3,8 @@
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/antliubimov/frontend-project-46/workflows/hexlet-check/badge.svg)](https://github.com/antliubimov/frontend-project-46/actions)
 [![Maintainability](https://api.codeclimate.com/v1/badges/73d98ad7d49750f0b1ec/maintainability)](https://codeclimate.com/github/antliubimov/frontend-project-46/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/73d98ad7d49750f0b1ec/test_coverage)](https://codeclimate.com/github/antliubimov/frontend-project-46/test_coverage)
+
 
 ## Description:
 This is a program that in the input receives two files, compares their file structure and displays differences

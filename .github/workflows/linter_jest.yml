@@ -1,0 +1,6 @@
+name: linter and jest test
+on: [push]
+jobs:
+  lint-jest-test:
+    runs-on: ubuntu-latest
+
