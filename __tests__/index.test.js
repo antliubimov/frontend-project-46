@@ -11,7 +11,10 @@ const getFixturePath = (filename) =>
   path.join(__dirname, '..', '__fixtures__', filename);
 const readFile = (filename) => readFileSync(getFixturePath(filename), 'utf8');
 
-const cases = [['file1.json', 'file2.json', 'expected_flat_json.txt']];
+const cases = [
+  ['file1.json', 'file2.json', 'expected_flat_json.txt'],
+  ['file1.yaml', 'file2.yaml', 'expected_flat_yaml.txt'],
+];
 
 test.each(cases)(
   'Compare %s and %s files',
