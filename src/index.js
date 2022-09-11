@@ -6,7 +6,7 @@ import _ from 'lodash';
 const readFile = (filePath) => {
   const currDir = cwd();
   const fileOfPath = path.resolve(currDir, filePath);
-  return readFileSync(fileOfPath);
+  return readFileSync(fileOfPath, 'utf-8');
 };
 
 const getExtName = (filePath) => path.extname(filePath);
