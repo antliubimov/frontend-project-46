@@ -2,6 +2,7 @@ import { cwd } from 'node:process';
 import path from 'node:path';
 import { readFileSync } from 'node:fs';
 import _ from 'lodash';
+import yaml from 'js-yaml';
 
 const readFile = (filePath) => {
   const currDir = cwd();
@@ -10,6 +11,16 @@ const readFile = (filePath) => {
 };
 
 const getExtName = (filePath) => path.extname(filePath);
+
+const parseFn = (extname) => {
+  let parse;
+  if (extname === 'json') {
+    parse = JSON.parse;
+  } else if (extname === '.yml' || extname === '.yaml') {
+    parse = yaml.safeLoad;
+  }
+  return parse;
+};
 
 const getFileContent = (file) => {
   let fileContent = '';
