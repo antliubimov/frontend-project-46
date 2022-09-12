@@ -14,18 +14,19 @@ const getExtName = (filePath) => path.extname(filePath);
 
 const parseFn = (extname) => {
   let parse;
-  if (extname === 'json') {
+  if (extname === '.json') {
     parse = JSON.parse;
   } else if (extname === '.yml' || extname === '.yaml') {
-    parse = yaml.safeLoad;
+    parse = yaml.load;
   }
   return parse;
 };
 
-const getFileContent = (file) => {
+const getFileContent = (file, extname) => {
   let fileContent = '';
   try {
-    fileContent = JSON.parse(readFile(file));
+    const parse = parseFn(extname);
+    fileContent = parse(readFile(file));
   } catch (err) {
     if (err.code === 'ENOENT') {
       fileContent = null;
@@ -43,7 +44,7 @@ const getSortedUnionKeys = (obj1, obj2) => {
   return _.sortedUniq([...obj1Keys, ...obj2Keys].sort());
 };
 
-const diffJSON = (obj1, obj2) => {
+const diffObjects = (obj1, obj2) => {
   const allSortedKeys = getSortedUnionKeys(obj1, obj2);
   const result = allSortedKeys.reduce((acc, key) => {
     let str = acc;
@@ -73,15 +74,15 @@ const diffJSON = (obj1, obj2) => {
 const genDiff = (file1, file2) => {
   const extname1 = getExtName(file1);
   const extname2 = getExtName(file2);
-  const file1Content = getFileContent(file1);
-  const file2Content = getFileContent(file2);
+  const file1Content = getFileContent(file1, extname1);
+  const file2Content = getFileContent(file2, extname2);
   let result = '';
   if (extname1 === extname2 && file1Content && file2Content) {
-    result = diffJSON(file1Content, file2Content);
+    result = diffObjects(file1Content, file2Content);
   } else if (extname1 !== extname2) {
-    result = 'Extnames are not equal.';
+    result = 'Extnames are not equal';
   } else {
-    result = 'One of files is empty';
+    result = 'One of the files is empty';
   }
   return result;
 };
