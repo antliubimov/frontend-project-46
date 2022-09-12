@@ -26,3 +26,13 @@ test.each(cases)(
     expect(result).toEqual(expectedResult);
   }
 );
+
+test('Different extnames', () => {
+  expect(genDiff('file1.json', 'file2.yaml')).toEqual('Extnames are not equal');
+});
+
+test('One of the files is empty', () => {
+  expect(genDiff('file1.json', 'empty.json')).toEqual(
+    'One of the files is empty'
+  );
+});
