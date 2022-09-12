@@ -25,3 +25,6 @@ gendiff filePath1 filePath2
 
 ## Compare flat .json-files
 [![asciicast](https://asciinema.org/a/ZQJW1JRljfRnNHhVS9R1LSLlw.svg)](https://asciinema.org/a/ZQJW1JRljfRnNHhVS9R1LSLlw)
+
+## Compare flat .yaml-files
+[![asciicast](https://asciinema.org/a/Bw6ARKGyjhrFZ35yvWDmyFX5c.svg)](https://asciinema.org/a/Bw6ARKGyjhrFZ35yvWDmyFX5c)
