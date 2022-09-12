@@ -2,25 +2,15 @@ import { cwd } from 'node:process';
 import path from 'node:path';
 import { readFileSync } from 'node:fs';
 import _ from 'lodash';
-import yaml from 'js-yaml';
+import parseFn from './parsers.js';
 
 const readFile = (filePath) => {
   const currDir = cwd();
   const fileOfPath = path.resolve(currDir, filePath);
-  return readFileSync(fileOfPath, 'utf8');
+  return readFileSync(fileOfPath, 'utf-8');
 };
 
 const getExtName = (filePath) => path.extname(filePath);
-
-const parseFn = (extname) => {
-  let parse;
-  if (extname === '.json') {
-    parse = JSON.parse;
-  } else if (extname === '.yml' || extname === '.yaml') {
-    parse = yaml.load;
-  }
-  return parse;
-};
 
 const getFileContent = (file, extname) => {
   let fileContent = '';
