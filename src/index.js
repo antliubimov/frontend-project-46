@@ -6,24 +6,24 @@ import _ from 'lodash';
 const readFile = (filePath) => {
   const currDir = cwd();
   const fileOfPath = path.resolve(currDir, filePath);
-  return readFileSync(fileOfPath, 'utf-8');
+  return readFileSync(fileOfPath, 'utf8');
 };
 
 const getExtName = (filePath) => path.extname(filePath);
 
-const getFileContents = (file) => {
-  let fileContents = '';
+const getFileContent = (file) => {
+  let fileContent = '';
   try {
-    fileContents = JSON.parse(readFile(file));
+    fileContent = JSON.parse(readFile(file));
   } catch (err) {
     if (err.code === 'ENOENT') {
-      fileContents = null;
+      fileContent = null;
       console.log(`File ${file} not found!`);
     } else {
       throw err;
     }
   }
-  return fileContents;
+  return fileContent;
 };
 
 const getSortedUnionKeys = (obj1, obj2) => {
@@ -62,11 +62,11 @@ const diffJSON = (obj1, obj2) => {
 const genDiff = (file1, file2) => {
   const extname1 = getExtName(file1);
   const extname2 = getExtName(file2);
-  const file1Contents = getFileContents(file1);
-  const file2Contents = getFileContents(file2);
+  const file1Content = getFileContent(file1);
+  const file2Content = getFileContent(file2);
   let result = '';
-  if (extname1 === extname2 && file1Contents && file2Contents) {
-    result = diffJSON(file1Contents, file2Contents);
+  if (extname1 === extname2 && file1Content && file2Content) {
+    result = diffJSON(file1Content, file2Content);
   } else if (extname1 !== extname2) {
     result = 'Extnames are not equal.';
   } else {
