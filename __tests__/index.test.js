@@ -12,8 +12,8 @@ const getFixturePath = (filename) =>
 const readFile = (filename) => readFileSync(getFixturePath(filename), 'utf8');
 
 const cases = [
-  ['file1.json', 'file2.json', 'expected_flat_json.txt'],
-  ['file1.yaml', 'file2.yaml', 'expected_flat_yaml.txt'],
+  ['file1.json', 'file2.json', 'expected_json.txt'],
+  ['file1.yaml', 'file2.yaml', 'expected_yaml.txt'],
 ];
 
 test.each(cases)(
