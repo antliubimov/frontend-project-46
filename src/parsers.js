@@ -6,6 +6,8 @@ const parseFn = (extname) => {
     parse = JSON.parse;
   } else if (extname === '.yml' || extname === '.yaml') {
     parse = yaml.load;
+  } else {
+    throw new Error(`format ${extname} is not supported`);
   }
   return parse;
 };
