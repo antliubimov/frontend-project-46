@@ -110,7 +110,7 @@ const makeString = (data, depth) => {
   const result = Object.entries(data).map(([key, value]) =>
     getString(key, value, depth + 1)
   );
-  return `{\n${result.join('\n')}\n${makeReplaces(depth)}}`;
+  return `{\n${result.join('\n')}\n${makeReplaces(depth)}  }`;
 };
 
 const stylish = (data) => {
@@ -121,7 +121,7 @@ const stylish = (data) => {
           return [
             `${makeReplaces(depth)}  ${key}: {`,
             iter(value, depth + 1),
-            `${makeReplaces(depth)}}`,
+            `${makeReplaces(depth)}  }`,
           ];
         case 'added':
           return getString(key, value, depth, '+');
