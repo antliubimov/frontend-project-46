@@ -85,8 +85,7 @@ const diffObjects = (obj1, obj2) => {
       return {
         type: 'changed',
         key,
-        value1: obj1[key],
-        value2: obj2[key],
+        value: [obj1[key], obj2[key]],
       };
     }
     return {
@@ -97,14 +96,62 @@ const diffObjects = (obj1, obj2) => {
   });
 };
 
-const genDiff = (file1, file2) => {
+const makeReplaces = (depth, replacer = ' ', spacesCount = 2) =>
+  `${replacer.repeat(spacesCount * (2 * depth - 1))}`;
+
+const getString = (key, value, depth, symbol = ' ') =>
+  `${makeReplaces(depth)}${symbol} ${key}: ${makeString(value, depth)}`;
+
+const makeString = (data, depth) => {
+  if (!isObject(data)) {
+    return data;
+  }
+
+  const result = Object.entries(data).map(([key, value]) =>
+    getString(key, value, depth + 1)
+  );
+  return `{\n${result.join('\n')}\n${makeReplaces(depth)}}`;
+};
+
+const stylish = (data) => {
+  const iter = (data, depth) =>
+    data.map(({ type, key, value }) => {
+      switch (type) {
+        case 'nested':
+          return [
+            `${makeReplaces(depth)}  ${key}: {`,
+            iter(value, depth + 1),
+            `${makeReplaces(depth)}}`,
+          ];
+        case 'added':
+          return getString(key, value, depth, '+');
+        case 'deleted':
+          return getString(key, value, depth, '-');
+        case 'changed':
+          return `${getString(key, value[0], depth, '-')}\n${getString(
+            key,
+            value[1],
+            depth,
+            '+'
+          )}`;
+        case 'unchanged':
+          return getString(key, value, depth);
+      }
+    });
+
+  const result = iter(data, 1).flat(Infinity);
+  return `{\n${result.join('\n')}\n}`;
+};
+
+const genDiff = (file1, file2, formatter = 'stylish') => {
   const extname1 = getExtName(file1);
   const extname2 = getExtName(file2);
   const file1Content = getFileContent(file1, extname1);
   const file2Content = getFileContent(file2, extname2);
   let result = '';
   if (extname1 === extname2 && file1Content && file2Content) {
-    result = diffObjects(file1Content, file2Content);
+    const tree = diffObjects(file1Content, file2Content);
+    result = stylish(tree);
   } else if (extname1 !== extname2) {
     result = 'Extnames are not equal';
   } else {
@@ -113,8 +160,8 @@ const genDiff = (file1, file2) => {
   return result;
 };
 
-console.log(
-  genDiff('../__fixtures__/file1.json', '../__fixtures__/file2.json')
-);
+// console.log(
+//   genDiff('../__fixtures__/file1.json', '../__fixtures__/file2.json')
+// );
 
 export default genDiff;
