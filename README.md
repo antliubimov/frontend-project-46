@@ -28,3 +28,6 @@ gendiff filePath1 filePath2
 
 ## Compare flat .yaml-files
 [![asciicast](https://asciinema.org/a/Bw6ARKGyjhrFZ35yvWDmyFX5c.svg)](https://asciinema.org/a/Bw6ARKGyjhrFZ35yvWDmyFX5c)
+
+## Compare files with nested structures
+[![asciicast](https://asciinema.org/a/YL1X36WJ0bqrzCSISARmjQOsv.svg)](https://asciinema.org/a/YL1X36WJ0bqrzCSISARmjQOsv)
