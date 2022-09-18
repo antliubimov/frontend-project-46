@@ -14,10 +14,28 @@ const readFile = (filename) => readFileSync(getFixturePath(filename), 'utf8');
 const cases = [
   ['file1.json', 'file2.json', 'expected_json.txt'],
   ['file1.yaml', 'file2.yaml', 'expected_yaml.txt'],
+  ['file1.yml', 'file2.yml', 'expected_yaml.txt'],
+];
+
+const plainCases = [
+  ['file1.json', 'file2.json', 'expected_plain.txt'],
+  ['file1.yaml', 'file2.yaml', 'expected_plain.txt'],
+  ['file1.yml', 'file2.yml', 'expected_plain.txt'],
 ];
 
 test.each(cases)(
   'Compare %s and %s files',
+  (fileName1, fileName2, expectedFileName) => {
+    const expectedResult = readFile(expectedFileName);
+    const file1Path = getFixturePath(fileName1);
+    const file2Path = getFixturePath(fileName2);
+    const result = genDiff(file1Path, file2Path);
+    expect(result).toEqual(expectedResult);
+  }
+);
+
+test.each(plainCases)(
+  'Compare %s and %s files with plain formatter',
   (fileName1, fileName2, expectedFileName) => {
     const expectedResult = readFile(expectedFileName);
     const file1Path = getFixturePath(fileName1);
@@ -34,5 +52,11 @@ test('Different extnames', () => {
 test('One of the files is empty', () => {
   expect(genDiff('file1.json', 'empty.json')).toEqual(
     'One of the files is empty'
+  );
+});
+
+test('The format is not supported', () => {
+  expect(genDiff('file1.json', 'expected_json.txt')).toEqual(
+    'The format txt is not supported'
   );
 });
