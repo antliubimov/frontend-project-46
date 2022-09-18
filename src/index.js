@@ -3,7 +3,7 @@ import path from 'node:path';
 import { readFileSync } from 'node:fs';
 import _ from 'lodash';
 import parseFn from './parsers.js';
-import { isObject } from './utils.js';
+import isObject from './utils.js';
 import formatter from './formatters/index.js';
 
 const readFile = (filePath) => {

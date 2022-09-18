@@ -1,4 +1,4 @@
-import { isObject } from '../utils.js';
+import isObject from '../utils.js';
 
 const makeReplaces = (depth, replacer = ' ', spacesCount = 2) =>
   `${replacer.repeat(spacesCount * (2 * depth - 1))}`;

@@ -11,17 +11,15 @@ const getValue = (value) => {
 };
 
 const plain = (data) => {
-  const iter = (node, parentKey = '') => {
-    return node.flatMap(({ type, key, value }) => {
+  const iter = (node, parentKey = '') =>
+    node.flatMap(({ type, key, value }) => {
       let result = '';
       const newParentKey = parentKey ? `${parentKey}.${key}` : `${key}`;
       switch (type) {
         case 'nested':
           result = iter(value, newParentKey);
           break;
-        case 'unchanged':
-          result = null;
-          break;
+
         case 'added':
           result = `Property '${newParentKey}' was added with value: ${getValue(
             value
@@ -35,10 +33,12 @@ const plain = (data) => {
         case 'removed':
           result = `Property '${newParentKey}' was removed`;
           break;
+        default:
+          result = null;
+          break;
       }
       return result;
     });
-  };
 
   return iter(data)
     .filter((el) => !!el === true)
