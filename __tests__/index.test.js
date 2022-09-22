@@ -40,7 +40,7 @@ test.each(plainCases)(
     const expectedResult = readFile(expectedFileName);
     const file1Path = getFixturePath(fileName1);
     const file2Path = getFixturePath(fileName2);
-    const result = genDiff(file1Path, file2Path);
+    const result = genDiff(file1Path, file2Path, 'plain');
     expect(result).toEqual(expectedResult);
   }
 );
@@ -56,7 +56,13 @@ test('One of the files is empty', () => {
 });
 
 test('The format is not supported', () => {
-  expect(genDiff('file1.json', 'expected_json.txt')).toEqual(
-    'The format txt is not supported'
+  expect(() => genDiff('file1.json', 'expected_json.txt')).toThrowError(
+    `The format .txt is not supported`
   );
 });
+
+// test('The formatter is not supported', () => {
+//   expect(() => genDiff('file1.json', 'file2.json', 'test')).toThrowError(
+//     `This test formatter is not supported`
+//   );
+// });
