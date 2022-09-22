@@ -15,9 +15,10 @@ const readFile = (filePath) => {
 const getExtName = (filePath) => path.extname(filePath);
 
 const getFileContent = (file, extname) => {
+  let result;
   try {
     const parse = parseFn(extname);
-    return parse(readFile(file));
+    result = parse(readFile(file));
   } catch (err) {
     if (err.code === 'ENOENT') {
       console.log(`File ${file} not found!`);
@@ -25,6 +26,7 @@ const getFileContent = (file, extname) => {
       throw err;
     }
   }
+  return result;
 };
 
 const getSortedUnionKeys = (obj1, obj2) => {
@@ -43,19 +45,22 @@ const diffObjects = (obj1, obj2) => {
         key,
         value: diffObjects(obj1[key], obj2[key]),
       };
-    } else if (!_.has(obj1, key)) {
+    }
+    if (!_.has(obj1, key)) {
       return {
         type: 'added',
         key,
         value: obj2[key],
       };
-    } else if (!_.has(obj2, key)) {
+    }
+    if (!_.has(obj2, key)) {
       return {
         type: 'removed',
         key,
         value: obj1[key],
       };
-    } else if (!_.isEqual(obj1[key], obj2[key])) {
+    }
+    if (!_.isEqual(obj1[key], obj2[key])) {
       return {
         type: 'updated',
         key,
