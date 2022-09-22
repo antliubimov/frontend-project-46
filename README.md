@@ -34,3 +34,6 @@ gendiff filePath1 filePath2
 
 ## Compare files (format - plain) with nested structures
 [![asciicast](https://asciinema.org/a/rTvj1IzM6ZZmvh0nxgfwkQt8E.svg)](https://asciinema.org/a/rTvj1IzM6ZZmvh0nxgfwkQt8E)
+
+## Compare files (format - json) with nested structures
+[![asciicast](https://asciinema.org/a/5Sk3y4EVhfaeDWLbZ68yfrxzk.svg)](https://asciinema.org/a/5Sk3y4EVhfaeDWLbZ68yfrxzk)
