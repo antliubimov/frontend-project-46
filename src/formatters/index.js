@@ -2,19 +2,14 @@ import stylish from './stylish.js';
 import plain from './plain.js';
 
 export default (tree, formatName) => {
-  let result = '';
   switch (formatName) {
     case 'stylish':
-      result = stylish(tree);
-      break;
+      return stylish(tree);
     case 'plain':
-      result = plain(tree);
-      break;
+      return plain(tree);
     case 'json':
-      result = JSON.stringify(tree);
-      break;
+      return JSON.stringify(tree);
     default:
       throw new Error(`This ${formatName} formatter is not supported`);
   }
-  return result;
 };
