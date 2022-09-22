@@ -21,36 +21,28 @@ const getString = (key, value, depth, symbol = ' ') =>
 const stylish = (data) => {
   const iter = (node, depth) =>
     node.map(({ type, key, value }) => {
-      let result;
       switch (type) {
         case 'nested':
-          result = [
+          return [
             `${makeReplaces(depth)}  ${key}: {`,
             iter(value, depth + 1),
             `${makeReplaces(depth)}  }`,
           ];
-          break;
         case 'added':
-          result = getString(key, value, depth, '+');
-          break;
+          return getString(key, value, depth, '+');
         case 'removed':
-          result = getString(key, value, depth, '-');
-          break;
+          return getString(key, value, depth, '-');
         case 'updated':
-          result = `${getString(key, value[0], depth, '-')}\n${getString(
+          return `${getString(key, value[0], depth, '-')}\n${getString(
             key,
             value[1],
             depth,
             '+'
           )}`;
-          break;
         default:
-          result = getString(key, value, depth);
-          break;
+          return getString(key, value, depth);
       }
-      return result;
     });
-
   const result = iter(data, 1).flat(Infinity);
   return `{\n${result.join('\n')}\n}`;
 };
