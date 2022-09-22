@@ -19,7 +19,6 @@ const plain = (data) => {
         case 'nested':
           result = iter(value, newParentKey);
           break;
-
         case 'added':
           result = `Property '${newParentKey}' was added with value: ${getValue(
             value

@@ -10,6 +10,9 @@ export default (tree, formatName) => {
     case 'plain':
       result = plain(tree);
       break;
+    case 'json':
+      result = JSON.stringify(tree);
+      break;
     default:
       throw new Error(`This ${formatName} formatter is not supported`);
   }
