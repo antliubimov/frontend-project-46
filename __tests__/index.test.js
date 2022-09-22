@@ -12,15 +12,21 @@ const getFixturePath = (filename) =>
 const readFile = (filename) => readFileSync(getFixturePath(filename), 'utf8');
 
 const cases = [
-  ['file1.json', 'file2.json', 'expected_json.txt'],
-  ['file1.yaml', 'file2.yaml', 'expected_yaml.txt'],
-  ['file1.yml', 'file2.yml', 'expected_yaml.txt'],
+  ['file1.json', 'file2.json', 'expected_stylish.txt'],
+  ['file1.yaml', 'file2.yaml', 'expected_stylish.txt'],
+  ['file1.yml', 'file2.json', 'expected_stylish.txt'],
 ];
 
 const plainCases = [
   ['file1.json', 'file2.json', 'expected_plain.txt'],
   ['file1.yaml', 'file2.yaml', 'expected_plain.txt'],
-  ['file1.yml', 'file2.yml', 'expected_plain.txt'],
+  ['file1.json', 'file2.yml', 'expected_plain.txt'],
+];
+
+const jsonCases = [
+  ['file1.json', 'file2.json', 'expected_json.txt'],
+  ['file1.yaml', 'file2.yaml', 'expected_json.txt'],
+  ['file1.json', 'file2.yml', 'expected_json.txt'],
 ];
 
 test.each(cases)(
@@ -45,9 +51,16 @@ test.each(plainCases)(
   }
 );
 
-test('Different extnames', () => {
-  expect(genDiff('file1.json', 'file2.yaml')).toEqual('Extnames are not equal');
-});
+test.each(jsonCases)(
+  'Compare %s and %s files with json formatter',
+  (fileName1, fileName2, expectedFileName) => {
+    const expectedResult = readFile(expectedFileName);
+    const file1Path = getFixturePath(fileName1);
+    const file2Path = getFixturePath(fileName2);
+    const result = genDiff(file1Path, file2Path, 'json');
+    expect(result).toEqual(expectedResult);
+  }
+);
 
 test('One of the files is empty', () => {
   expect(genDiff('file1.json', 'empty.json')).toEqual(
@@ -60,9 +73,3 @@ test('The format is not supported', () => {
     `The format .txt is not supported`
   );
 });
-
-// test('The formatter is not supported', () => {
-//   expect(() => genDiff('file1.json', 'file2.json', 'test')).toThrowError(
-//     `This test formatter is not supported`
-//   );
-// });
