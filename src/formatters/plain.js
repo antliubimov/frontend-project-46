@@ -1,13 +1,11 @@
 import _ from 'lodash';
 
 const getValue = (value) => {
-  let result = value;
   if (_.isObject(value)) {
-    result = '[complex value]';
+    return '[complex value]';
   } else if (_.isString(value)) {
-    result = `'${value}'`;
+    return `'${value}'`;
   }
-  return result;
 };
 
 const plain = (data) => {

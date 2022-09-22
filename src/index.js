@@ -61,13 +61,12 @@ const diffObjects = (obj1, obj2) => {
         key,
         value: [obj1[key], obj2[key]],
       };
-    } else {
-      return {
-        type: 'unchanged',
-        key,
-        value: obj1[key],
-      };
     }
+    return {
+      type: 'unchanged',
+      key,
+      value: obj1[key],
+    };
   });
 };
 
@@ -76,14 +75,11 @@ const genDiff = (file1, file2, formatName = 'stylish') => {
   const extname2 = getExtName(file2);
   const file1Content = getFileContent(file1, extname1);
   const file2Content = getFileContent(file2, extname2);
-  let result = '';
   if (file1Content && file2Content) {
     const tree = diffObjects(file1Content, file2Content);
-    result = formatter(tree, formatName);
-  } else {
-    result = 'One of the files is empty';
+    return formatter(tree, formatName);
   }
-  return result;
+  return 'One of the files is empty';
 };
 
 export default genDiff;
