@@ -12,25 +12,19 @@ const getValue = (value) => {
 
 const plain = (data) => {
   const iter = (node, parentKey = '') => node.flatMap(({ type, key, value }) => {
-    let result = '';
     const newParentKey = parentKey ? `${parentKey}.${key}` : `${key}`;
     switch (type) {
       case 'nested':
-        result = iter(value, newParentKey);
-        break;
+        return iter(value, newParentKey);
       case 'added':
-        result = `Property '${newParentKey}' was added with value: ${getValue(value)}`;
-        break;
+        return `Property '${newParentKey}' was added with value: ${getValue(value)}`;
       case 'updated':
-        result = `Property '${newParentKey}' was updated. From ${getValue(value[0])} to ${getValue(value[1])}`;
-        break;
+        return `Property '${newParentKey}' was updated. From ${getValue(value[0])} to ${getValue(value[1])}`;
       case 'removed':
-        result = `Property '${newParentKey}' was removed`;
-        break;
+        return `Property '${newParentKey}' was removed`;
       default:
-        result = null;
+        return null;
     }
-    return result;
   });
 
   return iter(data)

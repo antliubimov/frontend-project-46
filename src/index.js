@@ -15,19 +15,16 @@ const readFile = (filePath) => {
 const getExtName = (filePath) => path.extname(filePath);
 
 const getFileContent = (file, extname) => {
-  let fileContent = '';
   try {
     const parse = parseFn(extname);
-    fileContent = parse(readFile(file));
+    return parse(readFile(file));
   } catch (err) {
     if (err.code === 'ENOENT') {
-      fileContent = null;
       console.log(`File ${file} not found!`);
     } else {
       throw err;
     }
   }
-  return fileContent;
 };
 
 const getSortedUnionKeys = (obj1, obj2) => {
@@ -40,39 +37,37 @@ const diffObjects = (obj1, obj2) => {
   const allSortedKeys = getSortedUnionKeys(obj1, obj2);
 
   return allSortedKeys.map((key) => {
-    let result;
     if (isObject(obj1[key]) && isObject(obj2[key])) {
-      result = {
+      return {
         type: 'nested',
         key,
         value: diffObjects(obj1[key], obj2[key]),
       };
     } else if (!_.has(obj1, key)) {
-      result = {
+      return {
         type: 'added',
         key,
         value: obj2[key],
       };
     } else if (!_.has(obj2, key)) {
-      result = {
+      return {
         type: 'removed',
         key,
         value: obj1[key],
       };
     } else if (!_.isEqual(obj1[key], obj2[key])) {
-      result = {
+      return {
         type: 'updated',
         key,
         value: [obj1[key], obj2[key]],
       };
     } else {
-      result = {
+      return {
         type: 'unchanged',
         key,
         value: obj1[key],
       };
     }
-    return result;
   });
 };
 
