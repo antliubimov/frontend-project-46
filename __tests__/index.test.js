@@ -12,21 +12,21 @@ const getFixturePath = (filename) =>
 const readFile = (filename) => readFileSync(getFixturePath(filename), 'utf8');
 
 const cases = [
-  ['file1.json', 'file2.json', 'expected_stylish.txt'],
-  ['file1.yaml', 'file2.yaml', 'expected_stylish.txt'],
-  ['file1.yml', 'file2.json', 'expected_stylish.txt'],
+  ['file1.json', 'file2.json', 'expectedStylish.txt'],
+  ['file1.yaml', 'file2.yaml', 'expectedStylish.txt'],
+  ['file1.yml', 'file2.json', 'expectedStylish.txt'],
 ];
 
 const plainCases = [
-  ['file1.json', 'file2.json', 'expected_plain.txt'],
-  ['file1.yaml', 'file2.yaml', 'expected_plain.txt'],
-  ['file1.json', 'file2.yml', 'expected_plain.txt'],
+  ['file1.json', 'file2.json', 'expectedPlain.txt'],
+  ['file1.yaml', 'file2.yaml', 'expectedPlain.txt'],
+  ['file1.json', 'file2.yml', 'expectedPlain.txt'],
 ];
 
 const jsonCases = [
-  ['file1.json', 'file2.json', 'expected_json.txt'],
-  ['file1.yaml', 'file2.yaml', 'expected_json.txt'],
-  ['file1.json', 'file2.yml', 'expected_json.txt'],
+  ['file1.json', 'file2.json', 'expectedJson.txt'],
+  ['file1.yaml', 'file2.yaml', 'expectedJson.txt'],
+  ['file1.json', 'file2.yml', 'expectedJson.txt'],
 ];
 
 test.each(cases)(
@@ -69,7 +69,7 @@ test('One of the files is empty', () => {
 });
 
 test('The format is not supported', () => {
-  expect(() => genDiff('file1.json', 'expected_json.txt')).toThrowError(
+  expect(() => genDiff('file1.json', 'expectedJson.txt')).toThrowError(
     `The format .txt is not supported`
   );
 });
