@@ -15,10 +15,9 @@ const readFile = (filePath) => {
 const getExtName = (filePath) => path.extname(filePath);
 
 const getFileContent = (file, extname) => {
-  let result;
   try {
     const parse = parseFn(extname);
-    result = parse(readFile(file));
+    return parse(readFile(file));
   } catch (err) {
     if (err.code === 'ENOENT') {
       console.log(`File ${file} not found!`);
@@ -26,7 +25,7 @@ const getFileContent = (file, extname) => {
       throw err;
     }
   }
-  return result;
+  return null;
 };
 
 const getSortedUnionKeys = (obj1, obj2) => {
