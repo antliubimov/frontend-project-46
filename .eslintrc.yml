@@ -3,10 +3,6 @@ env:
 
 extends:
   - 'airbnb-base'
-  - 'prettier'
-
-plugins:
-  - 'prettier'
 
 parserOptions:
   ecmaVersion: latest
@@ -17,5 +13,4 @@ rules:
     - error
     - ignorePackages
     - js: always
-  prettier/prettier: "error"
   no-underscore-dangle: [2, { "allow": ["__filename", "__dirname"] }] # разрешает подчёркивание в именах только для двух констант

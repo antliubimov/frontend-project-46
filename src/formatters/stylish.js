@@ -11,29 +11,28 @@ const makeString = (data, depth) => {
   return `{\n${result.join('\n')}\n${makeReplaces(depth)}  }`;
 };
 
-const getString = (key, value, depth, symbol = ' ') =>
-  `${makeReplaces(depth)}${symbol} ${key}: ${makeString(value, depth)}`;
+const getString = (key, value, depth, symbol = ' ') => `${makeReplaces(depth)}${symbol} ${key}: ${makeString(value, depth)}`;
 
 const stylish = (data) => {
   const iter = (node, depth) => node.map(({ type, key, value }) => {
-      switch (type) {
-        case 'nested':
-          return [
-            `${makeReplaces(depth)}  ${key}: {`,
-            iter(value, depth + 1),
-            `${makeReplaces(depth)}  }`,
-          ];
-        case 'added':
-          return getString(key, value, depth, '+');
-        case 'removed':
-          return getString(key, value, depth, '-');
-        case 'updated':
-          return `${getString(key, value[0], depth, '-')}
+    switch (type) {
+      case 'nested':
+        return [
+          `${makeReplaces(depth)}  ${key}: {`,
+          iter(value, depth + 1),
+          `${makeReplaces(depth)}  }`,
+        ];
+      case 'added':
+        return getString(key, value, depth, '+');
+      case 'removed':
+        return getString(key, value, depth, '-');
+      case 'updated':
+        return `${getString(key, value[0], depth, '-')}
 ${getString(key, value[1], depth, '+')}`;
-        default:
-          return getString(key, value, depth);
-      }
-    });
+      default:
+        return getString(key, value, depth);
+    }
+  });
   const result = iter(data, 1).flat(Infinity);
   return `{\n${result.join('\n')}\n}`;
 };

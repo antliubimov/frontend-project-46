@@ -7,8 +7,7 @@ import genDiff from '../src/index.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const getFixturePath = (filename) =>
-  path.join(__dirname, '..', '__fixtures__', filename);
+const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
 const readFile = (filename) => readFileSync(getFixturePath(filename), 'utf8');
 
 const cases = [
@@ -37,7 +36,7 @@ test.each(cases)(
     const file2Path = getFixturePath(fileName2);
     const result = genDiff(file1Path, file2Path);
     expect(result).toEqual(expectedResult);
-  }
+  },
 );
 
 test.each(plainCases)(
@@ -48,7 +47,7 @@ test.each(plainCases)(
     const file2Path = getFixturePath(fileName2);
     const result = genDiff(file1Path, file2Path, 'plain');
     expect(result).toEqual(expectedResult);
-  }
+  },
 );
 
 test.each(jsonCases)(
@@ -59,17 +58,13 @@ test.each(jsonCases)(
     const file2Path = getFixturePath(fileName2);
     const result = genDiff(file1Path, file2Path, 'json');
     expect(result).toEqual(expectedResult);
-  }
+  },
 );
 
 test('One of the files is empty', () => {
-  expect(genDiff('file1.json', 'empty.json')).toEqual(
-    'One of the files is empty'
-  );
+  expect(genDiff('file1.json', 'empty.json')).toEqual('One of the files is empty');
 });
 
 test('The format is not supported', () => {
-  expect(() => genDiff('file1.json', 'expectedJson.txt')).toThrowError(
-    `The format .txt is not supported`
-  );
+  expect(() => genDiff('file1.json', 'expectedJson.txt')).toThrowError('The format .txt is not supported');
 });
