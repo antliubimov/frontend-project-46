@@ -33,12 +33,8 @@ const stylish = (data) => {
         case 'removed':
           return getString(key, value, depth, '-');
         case 'updated':
-          return `${getString(key, value[0], depth, '-')}\n${getString(
-            key,
-            value[1],
-            depth,
-            '+'
-          )}`;
+          return `${getString(key, value[0], depth, '-')}
+${getString(key, value[1], depth, '+')}`;
         default:
           return getString(key, value, depth);
       }
