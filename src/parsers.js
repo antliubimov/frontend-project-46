@@ -7,7 +7,7 @@ const parseFn = (extname) => {
   } else if (extname === '.yml' || extname === '.yaml') {
     parse = yaml.load;
   } else {
-    throw new Error(`format ${extname} is not supported`);
+    throw new Error(`The format ${extname} is not supported`);
   }
   return parse;
 };
