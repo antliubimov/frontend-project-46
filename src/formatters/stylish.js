@@ -44,11 +44,9 @@ const stylish = (data) => {
             '+'
           )}`;
           break;
-        case 'unchanged':
+        default:
           result = getString(key, value, depth);
           break;
-        default:
-          throw new Error(`This ${type} type is not found`);
       }
       return result;
     });
