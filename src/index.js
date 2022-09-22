@@ -82,11 +82,9 @@ const genDiff = (file1, file2, formatName = 'stylish') => {
   const file1Content = getFileContent(file1, extname1);
   const file2Content = getFileContent(file2, extname2);
   let result = '';
-  if (extname1 === extname2 && file1Content && file2Content) {
+  if (file1Content && file2Content) {
     const tree = diffObjects(file1Content, file2Content);
     result = formatter(tree, formatName);
-  } else if (extname1 !== extname2) {
-    result = 'Extnames are not equal';
   } else {
     result = 'One of the files is empty';
   }
