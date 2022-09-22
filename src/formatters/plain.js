@@ -3,8 +3,10 @@ import _ from 'lodash';
 const getValue = (value) => {
   if (_.isObject(value)) {
     return '[complex value]';
+  } else if (_.isString(value)) {
+    return `'${value}'`;
   }
-  return `'${value}'`;
+  return value;
 };
 
 const plain = (data) => {
